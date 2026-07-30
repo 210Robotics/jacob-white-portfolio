@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import type { Project } from "@/lib/types";
@@ -25,7 +25,7 @@ export function ProjectGrid({ projects }: { projects: Project[] }) {
             role="tab"
             aria-selected={activeCategory === category}
             onClick={() => setActiveCategory(category)}
-            className="shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors aria-selected:border-orange-400/50 aria-selected:bg-orange-500/10 aria-selected:text-orange-300 border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
+            className="shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors aria-selected:border-teal-400/50 aria-selected:bg-teal-500/10 aria-selected:text-teal-300 border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
           >
             {category}
           </button>

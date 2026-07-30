@@ -4,13 +4,12 @@ export function BrandMark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "relative grid size-9 place-items-center rounded-md border border-orange-400/35 bg-orange-500/10 font-mono text-sm font-bold text-orange-400",
+        "relative grid size-9 place-items-center rounded-lg border border-teal-300/30 bg-teal-400/[0.08] font-mono text-sm font-bold tracking-[-0.04em] text-teal-300",
         className,
       )}
       aria-hidden="true"
     >
       JW
-      <span className="absolute -right-1 -top-1 size-2 rounded-full bg-teal-400" />
     </span>
   );
 }

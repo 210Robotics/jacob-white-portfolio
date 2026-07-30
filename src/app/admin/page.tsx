@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 const inputClass =
-  "h-10 w-full rounded-md border border-white/12 bg-zinc-950 px-3 text-sm text-white outline-none placeholder:text-zinc-700 focus:border-orange-400/60 focus:ring-2 focus:ring-orange-500/20";
+  "h-10 w-full rounded-md border border-white/12 bg-zinc-950 px-3 text-sm text-white outline-none placeholder:text-zinc-700 focus:border-teal-400/60 focus:ring-2 focus:ring-teal-500/20";
 const textareaClass =
-  "min-h-28 w-full rounded-md border border-white/12 bg-zinc-950 px-3 py-2.5 text-sm leading-6 text-white outline-none placeholder:text-zinc-700 focus:border-orange-400/60 focus:ring-2 focus:ring-orange-500/20";
+  "min-h-28 w-full rounded-md border border-white/12 bg-zinc-950 px-3 py-2.5 text-sm leading-6 text-white outline-none placeholder:text-zinc-700 focus:border-teal-400/60 focus:ring-2 focus:ring-teal-500/20";
 
 export default async function AdminPage() {
   if (!isAuthConfigured()) {
@@ -137,14 +137,14 @@ export default async function AdminPage() {
         </div>
 
         {!writable ? (
-          <Card className="mt-6 border-orange-400/25 bg-orange-400/[0.05] p-5">
+          <Card className="mt-6 border-teal-400/25 bg-teal-400/[0.05] p-5">
             <div className="flex gap-3">
-              <CircleAlert className="mt-0.5 size-5 shrink-0 text-orange-400" />
+              <CircleAlert className="mt-0.5 size-5 shrink-0 text-teal-400" />
               <div>
-                <p className="font-semibold text-orange-100">
+                <p className="font-semibold text-teal-100">
                   Preview mode is read-only
                 </p>
-                <p className="mt-1 text-sm leading-6 text-orange-100/60">
+                <p className="mt-1 text-sm leading-6 text-teal-100/60">
                   Connect Neon, run the schema push and seed commands, then
                   redeploy. The forms below show exactly what will become
                   editable.
@@ -327,7 +327,7 @@ export default async function AdminPage() {
                                 alt={image.alt}
                                 fill
                                 sizes="64px"
-                                className="object-cover"
+                                className="object-contain p-1"
                               />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -425,7 +425,7 @@ function AdminSetup() {
   return (
     <section className="engineering-grid grid min-h-[calc(100svh-4rem)] place-items-center px-5 py-16">
       <Card className="max-w-2xl p-8 sm:p-10">
-        <LockKeyhole className="size-6 text-orange-400" />
+        <LockKeyhole className="size-6 text-teal-400" />
         <h1 className="mt-6 text-3xl font-semibold tracking-tight text-white">
           The dashboard is built and waiting for its owner.
         </h1>
@@ -460,7 +460,7 @@ function StatusCard({
         className={
           ready
             ? "grid size-9 place-items-center rounded-md bg-teal-400/10 text-teal-400"
-            : "grid size-9 place-items-center rounded-md bg-orange-400/10 text-orange-400"
+            : "grid size-9 place-items-center rounded-md bg-teal-400/10 text-teal-400"
         }
       >
         <Icon className="size-4" />
@@ -472,7 +472,7 @@ function StatusCard({
       {ready ? (
         <CheckCircle2 className="ml-auto size-4 text-teal-400" />
       ) : (
-        <CircleAlert className="ml-auto size-4 text-orange-400" />
+        <CircleAlert className="ml-auto size-4 text-teal-400" />
       )}
     </Card>
   );
@@ -522,8 +522,8 @@ function EntityList({
 }) {
   return (
     <div className="grid gap-3">
-      <details className="rounded-xl border border-dashed border-orange-400/25 bg-orange-400/[0.03] p-4">
-        <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-orange-300">
+      <details className="rounded-xl border border-dashed border-teal-400/25 bg-teal-400/[0.03] p-4">
+        <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-teal-300">
           <Plus className="size-4" /> {newLabel}
         </summary>
         <div className="mt-5">{newForm}</div>

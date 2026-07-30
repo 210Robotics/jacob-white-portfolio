@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Download, FileText } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ export default async function ResumePage() {
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
+            as="h1"
             eyebrow="Résumé"
             title="Current experience, one download."
             description="The dashboard can replace the active file, preserve prior versions, and update version metadata without changing site code."
@@ -41,7 +42,7 @@ export default async function ResumePage() {
           <div className="mt-12">
             <Card className="mb-5 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4">
-                <span className="grid size-11 place-items-center rounded-md bg-orange-500/10 text-orange-400">
+                <span className="grid size-11 place-items-center rounded-md bg-teal-500/10 text-teal-400">
                   <FileText className="size-5" />
                 </span>
                 <div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
@@ -45,14 +45,14 @@ export function GalleryCarousel({ gallery }: { gallery: Gallery }) {
               key={image.id}
               type="button"
               onClick={() => setActiveImageId(image.id)}
-              className="group relative aspect-[4/3] w-[82vw] max-w-[620px] shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-zinc-900 text-left sm:w-[64vw]"
+              className="group relative aspect-[4/3] w-[82vw] max-w-[620px] shrink-0 snap-start overflow-hidden rounded-2xl border border-white/10 bg-[#d7dbdc] text-left transition-colors hover:border-teal-300/35 sm:w-[64vw]"
             >
               <Image
                 src={image.url}
                 alt={image.alt}
                 fill
                 sizes="(max-width: 640px) 82vw, 620px"
-                className="object-cover transition duration-500 group-hover:scale-[1.02]"
+                className="object-contain p-3 transition duration-500 group-hover:scale-[1.012]"
               />
               <span className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-black/75 p-4 text-sm text-zinc-200">
                 <span>{image.caption ?? image.alt}</span>

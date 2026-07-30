@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   BlogPost,
   Experience,
   Gallery,
@@ -12,9 +12,9 @@ import type {
 export const siteSettingsSeed: SiteSettings = {
   id: "primary",
   heroEyebrow: "Mechanical engineering · robotics · digital industry",
-  heroTitle: "Building intelligent machines from first sketch to field test.",
+  heroTitle: "Designing machines that think, move, and make.",
   heroSummary:
-    "Jacob White is a UT San Antonio Honors mechanical engineering student, Siemens technical engineering intern lead, and founder-president of 210 Robotics. He brings 10+ years of CAD experience to robotics, manufacturing, simulation, software, and autonomous systems.",
+    "Mechanical engineer focused on CAD, simulation, robotics, and autonomous systems. Siemens technical lead and student mentor with 10+ years of hands-on design experience.",
   availability:
     "Open to engineering collaborations, research, and ambitious build teams.",
   contactEmail: "jmwhite407@gmail.com",

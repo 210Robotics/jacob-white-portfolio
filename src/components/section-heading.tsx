@@ -5,20 +5,22 @@ export function SectionHeading({
   title,
   description,
   className,
+  as: Heading = "h2",
 }: {
   eyebrow: string;
   title: string;
   description?: string;
   className?: string;
+  as?: "h1" | "h2";
 }) {
   return (
     <div className={cn("max-w-3xl", className)}>
-      <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-orange-400">
+      <p className="text-xs font-semibold uppercase tracking-[0.19em] text-teal-400">
         {eyebrow}
       </p>
-      <h2 className="mt-4 text-balance text-3xl font-semibold tracking-[-0.035em] text-white sm:text-4xl lg:text-5xl">
+      <Heading className="mt-4 text-balance text-3xl font-medium tracking-[-0.05em] text-white sm:text-4xl lg:text-5xl">
         {title}
-      </h2>
+      </Heading>
       {description ? (
         <p className="mt-5 text-pretty text-base leading-7 text-zinc-400 sm:text-lg">
           {description}

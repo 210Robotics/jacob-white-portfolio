@@ -1,56 +1,58 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { BrandMark } from "./brand-mark";
 import { MobileNav } from "./mobile-nav";
 
 const links = [
+  ["Work", "/projects"],
   ["About", "/about"],
   ["Experience", "/experience"],
-  ["Projects", "/projects"],
   ["Research", "/research"],
-  ["Blog", "/blog"],
+  ["Notes", "/blog"],
   ["Gallery", "/gallery"],
 ];
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-white/8 bg-zinc-950/88 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Link
-          href="/"
-          className="group flex items-center gap-3"
-          aria-label="Jacob White home"
-        >
+    <header className="sticky top-0 z-40 border-b border-white/[0.07] bg-[#080b0d]/88 backdrop-blur-xl">
+      <div className="mx-auto flex h-[68px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-14">
+        <Link href="/" className="group flex items-center gap-3" aria-label="Jacob White home">
           <BrandMark />
           <span className="hidden leading-tight sm:block">
-            <span className="block text-sm font-semibold text-white">
+            <span className="block text-sm font-semibold tracking-[-0.015em] text-white">
               Jacob White
             </span>
-            <span className="block font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500 group-hover:text-orange-400">
-              Engineer · Builder
+            <span className="block text-[10px] uppercase tracking-[0.14em] text-zinc-600 transition-colors group-hover:text-teal-400">
+              Mechanical Engineer
             </span>
           </span>
         </Link>
-        <nav className="hidden items-center gap-5 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-4 lg:flex" aria-label="Primary">
           {links.map(([label, href]) => (
             <Link
               key={href}
               href={href}
-              className="text-sm font-medium text-zinc-400 transition-colors hover:text-white"
+              className="px-1.5 py-2 text-[13px] font-medium text-zinc-400 transition-colors hover:text-white"
             >
               {label}
             </Link>
           ))}
           <Link
             href="/resume"
-            className="rounded-md border border-white/12 px-3 py-2 text-sm font-semibold text-zinc-200 transition-colors hover:border-orange-400/50 hover:text-orange-400"
+            className="rounded-lg border border-white/[0.12] px-3.5 py-2 text-[13px] font-semibold text-zinc-200 transition-colors hover:border-teal-300/35 hover:text-teal-300"
           >
             Résumé
           </Link>
           <Link
             href="/contact"
-            className="rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-zinc-950 transition-colors hover:bg-orange-400"
+            className="rounded-lg bg-teal-400 px-3.5 py-2 text-[13px] font-semibold text-[#06100f] transition-colors hover:bg-teal-300"
           >
             Contact
+          </Link>
+          <Link
+            href="/admin"
+            className="px-1.5 py-2 text-[13px] font-medium text-zinc-600 transition-colors hover:text-teal-300"
+          >
+            Admin
           </Link>
         </nav>
         <MobileNav />

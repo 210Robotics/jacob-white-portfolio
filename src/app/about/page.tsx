@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
@@ -94,6 +94,7 @@ export default function AboutPage() {
       <section className="engineering-grid border-b border-white/8">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
           <SectionHeading
+            as="h1"
             eyebrow="About Jacob"
             title="An engineer who is happiest at the interfaces."
             description="Mechanical and software. CAD and the shop floor. Simulation and test. Technical detail and team leadership. Jacob's work lives where those disciplines have to agree."
@@ -115,7 +116,7 @@ export default function AboutPage() {
 
       <section className="mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:py-32">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange-400">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-teal-400">
             The short version
           </p>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
@@ -180,7 +181,7 @@ export default function AboutPage() {
               <span className="font-mono text-xs text-zinc-700">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <CheckCircle2 className="mt-8 size-5 text-orange-400" />
+              <CheckCircle2 className="mt-8 size-5 text-teal-400" />
               <h3 className="mt-5 text-lg font-semibold text-white">{title}</h3>
               <p className="mt-3 text-sm leading-6 text-zinc-500">{detail}</p>
             </Card>

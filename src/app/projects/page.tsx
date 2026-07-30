@@ -18,6 +18,7 @@ export default async function ProjectsPage() {
     <section className="engineering-grid min-h-screen">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
+          as="h1"
           eyebrow="Projects"
           title="Machines, models, and software with a reason to exist."
           description="Filter the portfolio by discipline, then open any project for its engineering story, role, tools, and source links."

@@ -46,3 +46,6 @@ next-env.d.ts
 /AGENTS.md
 /scaffold-jw/
 /tmp/
+
+.vercel
+.env*

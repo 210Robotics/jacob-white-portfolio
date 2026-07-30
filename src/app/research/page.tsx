@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +20,7 @@ export default async function ResearchPage() {
     <section className="engineering-grid min-h-screen">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
+          as="h1"
           eyebrow="Research"
           title="Questions worth building hardware to answer."
           description="This is a living research map—not a list of unsupported publication claims. It captures the areas Jacob is actively developing and the technical directions he wants to pursue."

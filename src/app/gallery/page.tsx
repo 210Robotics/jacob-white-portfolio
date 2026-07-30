@@ -18,6 +18,7 @@ export default async function GalleryPage() {
     <section className="engineering-grid min-h-screen">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
+          as="h1"
           eyebrow="Gallery"
           title="The work is better up close."
           description="Horizontal, touch-friendly galleries for CAD, prototypes, competition moments, shop work, and the people behind the machine."

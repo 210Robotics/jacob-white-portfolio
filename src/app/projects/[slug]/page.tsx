@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -88,13 +88,13 @@ export default async function ProjectDetailPage({ params }: Props) {
 
       {project.coverImageUrl ? (
         <div className="mx-auto max-w-6xl px-5 pt-12 sm:px-8">
-          <div className="relative aspect-[16/8] overflow-hidden rounded-xl border border-white/10 bg-zinc-900">
+          <div className="relative aspect-[16/8] overflow-hidden rounded-2xl border border-white/10 bg-[#d7dbdc]">
             <Image
               src={project.coverImageUrl}
               alt={`${project.title} project image`}
               fill
               sizes="(max-width: 1152px) 100vw, 1152px"
-              className="object-cover object-center"
+              className="object-contain object-center p-4"
               priority
             />
           </div>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { SectionHeading } from "@/components/section-heading";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -19,6 +19,7 @@ export default async function ExperiencePage() {
     <section className="engineering-grid min-h-screen">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
+          as="h1"
           eyebrow="Experience"
           title="A timeline built around responsibility."
           description="The thread is consistent: learn the system deeply, own the interfaces, and help the team deliver something that works."
@@ -30,7 +31,7 @@ export default async function ExperiencePage() {
               key={experience.id}
               className="relative grid gap-4 pb-12 pl-10 md:grid-cols-[140px_1fr] md:gap-12 md:pl-0"
             >
-              <span className="absolute left-0 top-2 size-[15px] rounded-full border-4 border-zinc-950 bg-orange-400 md:left-[167px]" />
+              <span className="absolute left-0 top-2 size-[15px] rounded-full border-4 border-zinc-950 bg-teal-400 md:left-[167px]" />
               <div className="pt-1 md:text-right">
                 <p className="font-mono text-xs uppercase tracking-[0.13em] text-zinc-500">
                   {experience.period}

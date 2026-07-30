@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useActionState } from "react";
 import { Send } from "lucide-react";
@@ -29,7 +29,7 @@ export function ContactForm() {
           required
           minLength={20}
           rows={7}
-          className="rounded-md border border-white/12 bg-zinc-950 px-3 py-3 text-base text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-orange-400/60 focus:ring-2 focus:ring-orange-500/20"
+          className="rounded-md border border-white/12 bg-zinc-950 px-3 py-3 text-base text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-teal-400/60 focus:ring-2 focus:ring-teal-500/20"
           placeholder="Tell Jacob about the problem, team, or opportunity."
         />
       </label>
@@ -43,7 +43,7 @@ export function ContactForm() {
           className={
             state.status === "success"
               ? "rounded-md border border-teal-400/20 bg-teal-400/8 p-3 text-sm text-teal-200"
-              : "rounded-md border border-orange-400/20 bg-orange-400/8 p-3 text-sm text-orange-200"
+              : "rounded-md border border-teal-400/20 bg-teal-400/8 p-3 text-sm text-teal-200"
           }
         >
           {state.message}
@@ -76,7 +76,7 @@ function Field({
         type={type}
         required
         autoComplete={autoComplete}
-        className="h-11 rounded-md border border-white/12 bg-zinc-950 px-3 text-base text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-orange-400/60 focus:ring-2 focus:ring-orange-500/20"
+        className="h-11 rounded-md border border-white/12 bg-zinc-950 px-3 text-base text-white outline-none transition-colors placeholder:text-zinc-700 focus:border-teal-400/60 focus:ring-2 focus:ring-teal-500/20"
       />
     </label>
   );

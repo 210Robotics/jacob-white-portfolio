@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { getSocialLinks } from "@/lib/data";
 import { BrandMark } from "./brand-mark";
@@ -7,8 +7,8 @@ export async function SiteFooter() {
   const socials = await getSocialLinks();
 
   return (
-    <footer className="border-t border-white/8 bg-zinc-950">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr]">
+    <footer className="border-t border-white/[0.07] bg-[#080b0d]">
+      <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr] lg:px-14">
         <div>
           <div className="flex items-center gap-3">
             <BrandMark />
@@ -58,8 +58,8 @@ export async function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="border-t border-white/6">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-5 font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-700 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <div className="border-t border-white/[0.06]">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-2 px-5 py-5 font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-700 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-14">
           <span>© {new Date().getFullYear()} Jacob White</span>
           <span>Built for iteration</span>
         </div>

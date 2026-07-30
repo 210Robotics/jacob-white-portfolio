@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { ArrowUpRight, BriefcaseBusiness, Code2, Mail } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { SectionHeading } from "@/components/section-heading";
@@ -25,6 +25,7 @@ export default async function ContactPage() {
     <section className="engineering-grid min-h-screen">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
+          as="h1"
           eyebrow="Contact"
           title="Bring the problem worth solving."
           description="Engineering projects, research collaborations, robotics programs, speaking, and technical opportunities are all welcome."
@@ -90,8 +91,8 @@ function ContactLink({
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noreferrer" : undefined}
     >
-      <Card className="group flex items-center gap-4 p-5 transition-colors hover:border-orange-400/30">
-        <span className="grid size-10 place-items-center rounded-md bg-white/[0.05] text-zinc-400 group-hover:text-orange-400">
+      <Card className="group flex items-center gap-4 p-5 transition-colors hover:border-teal-400/30">
+        <span className="grid size-10 place-items-center rounded-md bg-white/[0.05] text-zinc-400 group-hover:text-teal-400">
           <Icon className="size-5" />
         </span>
         <span className="min-w-0 flex-1">
@@ -102,7 +103,7 @@ function ContactLink({
             {value}
           </span>
         </span>
-        <ArrowUpRight className="size-4 text-zinc-700 group-hover:text-orange-400" />
+        <ArrowUpRight className="size-4 text-zinc-700 group-hover:text-teal-400" />
       </Card>
     </a>
   );

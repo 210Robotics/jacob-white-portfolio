@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -23,6 +23,7 @@ export default async function BlogPage() {
     <section className="engineering-grid min-h-screen">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
+          as="h1"
           eyebrow="Field notes"
           title="What the build taught me."
           description="Short essays on engineering decisions, project leadership, manufacturing reality, and the systems behind the finished machine."
@@ -32,7 +33,7 @@ export default async function BlogPage() {
             {posts.map((post) => (
               <Card
                 key={post.id}
-                className="group relative overflow-hidden transition-[transform,border-color] hover:-translate-y-1 hover:border-orange-400/30"
+                className="group relative overflow-hidden transition-[transform,border-color] hover:-translate-y-1 hover:border-teal-400/30"
               >
                 <Link
                   href={`/blog/${post.slug}`}
@@ -47,7 +48,7 @@ export default async function BlogPage() {
                       alt=""
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover transition duration-500 group-hover:scale-[1.025]"
+                      className="object-contain p-3 transition duration-500 group-hover:scale-[1.012]"
                     />
                   </div>
                 ) : null}
@@ -56,7 +57,7 @@ export default async function BlogPage() {
                     <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-600">
                       {formatDate(post.publishedAt)}
                     </p>
-                    <ArrowUpRight className="size-5 text-zinc-700 group-hover:text-orange-400" />
+                    <ArrowUpRight className="size-5 text-zinc-700 group-hover:text-teal-400" />
                   </div>
                   <h2 className="mt-5 text-2xl font-semibold tracking-tight text-white">
                     {post.title}

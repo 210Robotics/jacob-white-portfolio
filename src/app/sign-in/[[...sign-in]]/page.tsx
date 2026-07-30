@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { SignIn } from "@clerk/nextjs";
 import { isAuthConfigured } from "@/lib/auth";
 import { Card } from "@/components/ui/card";
@@ -15,7 +15,7 @@ export default function SignInPage() {
         <SignIn routing="path" path="/sign-in" />
       ) : (
         <Card className="max-w-lg p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-orange-400">
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-teal-400">
             Setup required
           </p>
           <h1 className="mt-4 text-2xl font-semibold text-white">
