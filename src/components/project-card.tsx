@@ -11,14 +11,14 @@ export function ProjectCard({ project }: { project: Project }) {
       <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-10">
         <span className="sr-only">View {project.title}</span>
       </Link>
-      <div className="relative aspect-[16/9] overflow-hidden border-b border-white/[0.07] bg-[#d7dbdc]">
+      <div className="relative aspect-[16/9] overflow-hidden border-b border-white/[0.07] bg-[#0c1113]">
         {project.coverImageUrl ? (
           <Image
             src={project.coverImageUrl}
             alt={`${project.title} project image`}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-contain object-center p-3 transition duration-500 group-hover:scale-[1.018]"
+            className="object-contain object-center p-5 drop-shadow-[0_18px_22px_rgba(0,0,0,0.28)] transition duration-500 group-hover:scale-[1.025]"
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center bg-[#0d1315] p-8 text-center">
@@ -27,7 +27,7 @@ export function ProjectCard({ project }: { project: Project }) {
             </span>
           </div>
         )}
-        <div className="absolute left-4 top-4">
+        <div className="absolute left-4 top-4 z-[2]">
           <Badge className="border-black/10 bg-[#080b0d]/90 text-zinc-300">{project.year}</Badge>
         </div>
       </div>

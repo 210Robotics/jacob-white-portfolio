@@ -14,6 +14,10 @@ export function ProjectGrid({ projects }: { projects: Project[] }) {
     activeCategory === "All"
       ? projects
       : projects.filter((project) => project.category === activeCategory);
+  const countFor = (category: string) =>
+    category === "All"
+      ? projects.length
+      : projects.filter((project) => project.category === category).length;
 
   return (
     <div>
@@ -28,9 +32,16 @@ export function ProjectGrid({ projects }: { projects: Project[] }) {
             className="shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors aria-selected:border-teal-400/50 aria-selected:bg-teal-500/10 aria-selected:text-teal-300 border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
           >
             {category}
+            <span className="ml-2 font-mono text-[10px] text-zinc-600">
+              {countFor(category)}
+            </span>
           </button>
         ))}
       </div>
+      <p className="sr-only" aria-live="polite">
+        Showing {visibleProjects.length}{" "}
+        {activeCategory === "All" ? "" : activeCategory} projects.
+      </p>
       <div className="grid gap-5 md:grid-cols-2">
         {visibleProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />

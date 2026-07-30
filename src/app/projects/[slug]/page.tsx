@@ -88,7 +88,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
       {project.coverImageUrl ? (
         <div className="mx-auto max-w-6xl px-5 pt-12 sm:px-8">
-          <div className="relative aspect-[16/8] overflow-hidden rounded-2xl border border-white/10 bg-[#d7dbdc]">
+          <div className="relative aspect-[16/8] overflow-hidden rounded-2xl border border-white/10 bg-[#0c1113]">
             <Image
               src={project.coverImageUrl}
               alt={`${project.title} project image`}

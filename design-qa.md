@@ -38,3 +38,12 @@ Final result: **passed**
 - Clerk-disabled state fails closed and displays setup instructions; no admin content is exposed.
 - Browser console error count: 0.
 - Typecheck, lint, tests, and production build pass.
+
+## July 30 image and interaction refinement
+
+- Reprocessed the four supplied CAD renders deterministically into 1600 × 900 transparent PNGs. No generative model, invented geometry, or replacement image was used.
+- Removed source-page backgrounds, headings, and excess whitespace while preserving the original CAD assemblies and their full silhouettes.
+- Replaced light image panels with quiet charcoal presentation surfaces across the hero, cards, project details, blog, gallery, and lightbox.
+- Added Jacob's verified public headshot to the About page.
+- Added route-aware desktop navigation, project filter counts with a live result announcement, gallery position counters, disabled end states, lightbox previous/next controls, and keyboard arrow navigation.
+- Confirmed the configured admin email is `jmwhite407@gmail.com`; `ADMIN_USER_ID` remains the strongest optional restriction when present.

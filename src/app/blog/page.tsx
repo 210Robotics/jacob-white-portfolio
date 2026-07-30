@@ -42,7 +42,7 @@ export default async function BlogPage() {
                   <span className="sr-only">Read {post.title}</span>
                 </Link>
                 {post.coverImageUrl ? (
-                  <div className="relative aspect-[16/8] overflow-hidden border-b border-white/8 bg-zinc-950">
+                  <div className="relative aspect-[16/8] overflow-hidden border-b border-white/8 bg-[#0c1113]">
                     <Image
                       src={post.coverImageUrl}
                       alt=""

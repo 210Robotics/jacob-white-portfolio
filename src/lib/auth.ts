@@ -3,11 +3,12 @@ import "server-only";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+const defaultAdminEmail = "jmwhite407@gmail.com";
+
 export function isAuthConfigured() {
   return Boolean(
     process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
-      process.env.CLERK_SECRET_KEY &&
-      (process.env.ADMIN_USER_ID || process.env.ADMIN_EMAIL),
+      process.env.CLERK_SECRET_KEY,
   );
 }
 
@@ -21,12 +22,15 @@ export async function requireAdmin() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  if (process.env.ADMIN_USER_ID && userId === process.env.ADMIN_USER_ID) {
+  if (process.env.ADMIN_USER_ID) {
+    if (userId !== process.env.ADMIN_USER_ID) redirect("/?unauthorized=1");
     return { userId };
   }
 
   const user = await currentUser();
-  const allowedEmail = process.env.ADMIN_EMAIL?.toLowerCase();
+  const allowedEmail = (
+    process.env.ADMIN_EMAIL || defaultAdminEmail
+  ).toLowerCase();
   const emailMatches = user?.emailAddresses.some(
     (email) => email.emailAddress.toLowerCase() === allowedEmail,
   );

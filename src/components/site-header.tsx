@@ -1,6 +1,7 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { BrandMark } from "./brand-mark";
 import { MobileNav } from "./mobile-nav";
+import { SiteNavLink } from "./site-nav-link";
 
 const links = [
   ["Work", "/projects"],
@@ -28,32 +29,28 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-4 lg:flex" aria-label="Primary">
           {links.map(([label, href]) => (
-            <Link
-              key={href}
-              href={href}
-              className="px-1.5 py-2 text-[13px] font-medium text-zinc-400 transition-colors hover:text-white"
-            >
+            <SiteNavLink key={href} href={href}>
               {label}
-            </Link>
+            </SiteNavLink>
           ))}
-          <Link
+          <SiteNavLink
             href="/resume"
-            className="rounded-lg border border-white/[0.12] px-3.5 py-2 text-[13px] font-semibold text-zinc-200 transition-colors hover:border-teal-300/35 hover:text-teal-300"
+            className="after:hidden rounded-lg border border-white/[0.12] px-3.5 py-2 font-semibold text-zinc-200 hover:border-teal-300/35 hover:text-teal-300 aria-[current=page]:border-teal-300/35 aria-[current=page]:text-teal-300"
           >
             Résumé
-          </Link>
+          </SiteNavLink>
           <Link
             href="/contact"
-            className="rounded-lg bg-teal-400 px-3.5 py-2 text-[13px] font-semibold text-[#06100f] transition-colors hover:bg-teal-300"
+            className="rounded-lg bg-teal-400 px-3.5 py-2 text-[13px] font-semibold text-[#06100f] transition-[background,transform] hover:-translate-y-0.5 hover:bg-teal-300"
           >
             Contact
           </Link>
-          <Link
+          <SiteNavLink
             href="/admin"
-            className="px-1.5 py-2 text-[13px] font-medium text-zinc-600 transition-colors hover:text-teal-300"
+            className="after:hidden text-zinc-600 hover:text-teal-300 aria-[current=page]:text-teal-300"
           >
             Admin
-          </Link>
+          </SiteNavLink>
         </nav>
         <MobileNav />
       </div>

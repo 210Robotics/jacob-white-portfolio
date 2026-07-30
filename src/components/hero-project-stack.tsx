@@ -1,23 +1,23 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useRef } from "react";
 
 const frames = [
   {
-    src: "/portfolio/competition-robot-cad.png",
+    src: "/portfolio/competition-robot-cad-clean.png",
     alt: "Competition robot CAD assembly",
     label: "Competition systems",
     className: "hero-frame-back",
   },
   {
-    src: "/portfolio/mechanism-cad.png",
+    src: "/portfolio/mechanism-cad-clean.png",
     alt: "Robotic linkage mechanism CAD",
     label: "Mechanism design",
     className: "hero-frame-mid",
   },
   {
-    src: "/portfolio/frc-robot-cad.png",
+    src: "/portfolio/frc-robot-cad-clean.png",
     alt: "FRC robot CAD assembly",
     label: "Integrated robotics",
     className: "hero-frame-front",
@@ -64,14 +64,14 @@ export function HeroProjectStack() {
           key={frame.src}
           className={`${frame.className} absolute overflow-hidden rounded-2xl border border-white/[0.11] bg-[#111719] shadow-[0_32px_70px_rgba(0,0,0,0.42)]`}
         >
-          <div className="relative size-full bg-[#d7dbdc]">
+          <div className="relative size-full bg-[#0d1315]">
             <Image
               src={frame.src}
               alt={frame.alt}
               fill
               priority
               sizes="(max-width: 1024px) 84vw, 520px"
-              className="object-contain p-2"
+              className="object-contain p-4 drop-shadow-[0_18px_24px_rgba(0,0,0,0.32)]"
             />
           </div>
           <figcaption className="absolute inset-x-0 bottom-0 border-t border-white/[0.08] bg-[#0a0e10]/92 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-400 backdrop-blur">

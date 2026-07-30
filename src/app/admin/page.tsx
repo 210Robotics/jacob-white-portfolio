@@ -430,12 +430,12 @@ function AdminSetup() {
           The dashboard is built and waiting for its owner.
         </h1>
         <p className="mt-4 leading-7 text-zinc-400">
-          Connect Clerk and set Jacob&apos;s allowed user ID or email. The public
-          portfolio remains available while admin access stays closed.
+          Connect Clerk to enable sign-in. Access is restricted to
+          jmwhite407@gmail.com unless an ADMIN_USER_ID override is configured.
         </p>
         <ol className="mt-6 grid gap-3 text-sm leading-6 text-zinc-500">
           <li>1. Add Clerk through the Vercel Marketplace.</li>
-          <li>2. Set ADMIN_USER_ID or ADMIN_EMAIL.</li>
+          <li>2. Create the Clerk account for jmwhite407@gmail.com.</li>
           <li>3. Redeploy, then sign in at /sign-in.</li>
         </ol>
       </Card>

@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
@@ -93,12 +94,32 @@ export default function AboutPage() {
     <>
       <section className="engineering-grid border-b border-white/8">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
-          <SectionHeading
-            as="h1"
-            eyebrow="About Jacob"
-            title="An engineer who is happiest at the interfaces."
-            description="Mechanical and software. CAD and the shop floor. Simulation and test. Technical detail and team leadership. Jacob's work lives where those disciplines have to agree."
-          />
+          <div className="grid gap-12 lg:grid-cols-[1fr_280px] lg:items-center">
+            <SectionHeading
+              as="h1"
+              eyebrow="About Jacob"
+              title="An engineer who is happiest at the interfaces."
+              description="Mechanical and software. CAD and the shop floor. Simulation and test. Technical detail and team leadership. Jacob's work lives where those disciplines have to agree."
+            />
+            <figure className="relative mx-auto w-full max-w-[260px] overflow-hidden rounded-2xl border border-teal-300/20 bg-[#0d1315] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.32)] lg:mx-0">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
+                <Image
+                  src="/portrait/jacob-white.jpg"
+                  alt="Headshot of Jacob White"
+                  fill
+                  sizes="260px"
+                  className="object-cover object-top"
+                  priority
+                />
+              </div>
+              <figcaption className="flex items-center justify-between gap-3 px-2 pb-1 pt-3">
+                <span className="text-sm font-medium text-white">Jacob White</span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-teal-400">
+                  Engineer
+                </span>
+              </figcaption>
+            </figure>
+          </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-3">
             {[
               ["UT San Antonio", "Honors mechanical engineering · 3.92 GPA"],
