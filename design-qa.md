@@ -47,3 +47,24 @@ Final result: **passed**
 - Added Jacob's verified public headshot to the About page.
 - Added route-aware desktop navigation, project filter counts with a live result announcement, gallery position counters, disabled end states, lightbox previous/next controls, and keyboard arrow navigation.
 - Confirmed the configured admin email is `jmwhite407@gmail.com`; `ADMIN_USER_ID` remains the strongest optional restriction when present.
+
+## July 31 CMS and interaction pass
+
+- Final desktop proof: `C:\Users\z005591d\.codex\visualizations\2026\07\30\019fb45e-1559-7ca1-90e9-50e99aa63a86\portfolio-home-desktop-final.png`
+- Final mobile proof: `C:\Users\z005591d\.codex\visualizations\2026\07\30\019fb45e-1559-7ca1-90e9-50e99aa63a86\portfolio-home-mobile-final.png`
+- Gallery proof: `C:\Users\z005591d\.codex\visualizations\2026\07\30\019fb45e-1559-7ca1-90e9-50e99aa63a86\portfolio-gallery-final.png`
+- Skills proof: `C:\Users\z005591d\.codex\visualizations\2026\07\30\019fb45e-1559-7ca1-90e9-50e99aa63a86\portfolio-skills-final.png`
+
+### Mismatch ledger
+
+1. **Hero depth:** The earlier reference used a static stacked render. The implementation keeps the same silhouette but adds click, arrow, dot, keyboard-focus, and pointer-parallax states so the stack communicates that it is interactive.
+2. **Color intensity:** The reference used a brighter cyan. The implementation shifts the primary action from cyan into restrained emerald and keeps most surfaces neutral, matching the requested less-bright teal-on-black direction.
+3. **Image treatment:** Source CAD objects now sit on consistent charcoal presentation surfaces with their complete silhouettes visible. This intentionally avoids decorative crops and generated filler.
+4. **Content density:** The homepage carries six current priority projects below the fold while the animated hero only includes the four projects with confirmed visual assets. This keeps the first viewport calm and avoids empty frames.
+5. **Portrait use:** The supplied portrait appears as an editorial profile image and in a separate people gallery. It is not composited, regenerated, or background-replaced.
+6. **Mobile behavior:** The desktop navigation collapses into a right-side sheet; a Playwright regression test caught and verified the fix for link navigation after the sheet closes.
+
+### Automated interaction evidence
+
+- Playwright desktop and Pixel 7 projects pass project cycling, project deep-link changes, research modal, certification tab, gallery lightbox, protected admin redirect, mobile navigation, and horizontal-overflow checks.
+- The production build, TypeScript, ESLint, and Vitest checks pass with Clerk middleware, Neon content, and Blob uploads configured.

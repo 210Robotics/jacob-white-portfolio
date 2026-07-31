@@ -1,28 +1,35 @@
-import { getDb } from "../src/db";
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
 import {
   blogPosts,
+  certifications,
   experiences,
   galleries,
   galleryImages,
   projects,
   researchItems,
   resumeFiles,
+  skills,
   siteSettings,
   socialLinks,
 } from "../src/db/schema";
 import {
   blogPostsSeed,
+  certificationsSeed,
   experiencesSeed,
   galleriesSeed,
   projectsSeed,
   researchSeed,
   resumeFilesSeed,
+  skillsSeed,
   siteSettingsSeed,
   socialLinksSeed,
 } from "../src/lib/seed-content";
 
 async function seed() {
-  const db = getDb();
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) throw new Error("DATABASE_URL is required to seed content.");
+  const db = drizzle(neon(databaseUrl));
 
   await db
     .insert(siteSettings)
@@ -89,7 +96,8 @@ async function seed() {
   }
 
   for (const file of resumeFilesSeed) {
-    const values = { ...file, uploadedAt: new Date(file.uploadedAt) };
+    const { uploadedAt, ...fileValues } = file;
+    const values = { ...fileValues, createdAt: new Date(uploadedAt) };
     await db
       .insert(resumeFiles)
       .values(values)
@@ -101,6 +109,23 @@ async function seed() {
       .insert(socialLinks)
       .values(link)
       .onConflictDoUpdate({ target: socialLinks.id, set: link });
+  }
+
+  for (const skill of skillsSeed) {
+    await db
+      .insert(skills)
+      .values(skill)
+      .onConflictDoUpdate({ target: skills.id, set: skill });
+  }
+
+  for (const certification of certificationsSeed) {
+    await db
+      .insert(certifications)
+      .values(certification)
+      .onConflictDoUpdate({
+        target: certifications.id,
+        set: certification,
+      });
   }
 
   console.log("Portfolio seed complete.");

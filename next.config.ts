@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   experimental: {
+    optimizePackageImports: ["lucide-react", "radix-ui"],
     serverActions: {
       bodySizeLimit: "12mb",
     },

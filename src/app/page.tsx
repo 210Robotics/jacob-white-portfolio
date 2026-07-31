@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import { ArrowRight, BadgeCheck, Bot, Boxes, Cpu, DraftingCompass } from "lucide-react";
+import Image from "next/image";
 import { HeroProjectStack } from "@/components/hero-project-stack";
 import { ProjectCard } from "@/components/project-card";
 import { SectionHeading } from "@/components/section-heading";
@@ -41,9 +42,11 @@ const disciplines = [
 
 const selectedSlugs = [
   "roborowdy",
-  "four-axis-robotic-arm",
+  "iterative-propeller-design",
+  "sucker-rod-pump-simulation",
+  "siemens-competitive-intelligence-app",
+  "siemens-workforce-management",
   "autonomous-rc-car",
-  "siemens-intelligence-workforce-apps",
 ];
 
 export default async function HomePage() {
@@ -66,7 +69,7 @@ export default async function HomePage() {
               {titleBeforeThink}
               {titleAfterThink !== undefined ? (
                 <>
-                  <span className="text-teal-400">think</span>
+                  <span className="bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-transparent">think</span>
                   {titleAfterThink}
                 </>
               ) : null}
@@ -91,7 +94,7 @@ export default async function HomePage() {
           </div>
 
           <div className="reveal reveal-delay-1">
-            <HeroProjectStack />
+            <HeroProjectStack projects={projects.filter((project) => project.featured)} />
           </div>
         </div>
       </section>
@@ -148,6 +151,44 @@ export default async function HomePage() {
                 <p className="mt-3 text-sm leading-6 text-zinc-500">{discipline.detail}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-white/[0.07]">
+        <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[300px_1fr_auto] lg:items-center lg:px-14 lg:py-24">
+          <figure className="relative mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#0c1316] p-2 shadow-[0_30px_80px_rgba(0,0,0,0.4)] lg:mx-0">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
+              <Image
+                src={settings.portraitUrl}
+                alt="Jacob White"
+                fill
+                sizes="300px"
+                className="object-cover object-[center_28%]"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
+            </div>
+          </figure>
+          <div className="max-w-2xl">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-300">
+              Jacob White
+            </p>
+            <h2 className="mt-4 text-balance text-3xl font-medium tracking-[-0.05em] text-white sm:text-5xl">
+              Mechanical depth. Software range. A builder&apos;s bias.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-zinc-400">
+              Honors mechanical engineering at UT San Antonio, technical
+              engineering leadership at Siemens, and student-founded robotics
+              programs built around real machines and measurable decisions.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 lg:flex-col">
+            <Button asChild variant="secondary">
+              <Link href="/about">About Jacob <ArrowRight className="size-4" /></Link>
+            </Button>
+            <Button asChild variant="secondary">
+              <Link href="/skills">Skills & credentials <ArrowRight className="size-4" /></Link>
+            </Button>
           </div>
         </div>
       </section>

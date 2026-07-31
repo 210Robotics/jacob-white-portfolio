@@ -1,15 +1,18 @@
 ﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 import {
   ArrowDown,
   ArrowUp,
+  Award,
   CheckCircle2,
   CircleAlert,
   Database,
   ExternalLink,
   FileUp,
   ImagePlus,
+  Gauge,
   LockKeyhole,
   Plus,
   Save,
@@ -19,20 +22,24 @@ import { isDatabaseConfigured } from "@/db";
 import { isAuthConfigured, requireAdmin } from "@/lib/auth";
 import {
   getBlogPosts,
+  getCertifications,
   getExperiences,
   getGalleries,
   getProjects,
   getResearchItems,
   getResumeFiles,
+  getSkills,
   getSiteSettings,
   getSocialLinks,
 } from "@/lib/data";
 import type {
   BlogPost,
+  Certification,
   Experience,
   Gallery,
   Project,
   ResearchItem,
+  Skill,
   SocialLink,
 } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -41,11 +48,14 @@ import {
   deleteEntity,
   moveEntity,
   saveBlogPost,
+  saveCertification,
   saveExperience,
   saveGallery,
+  saveGalleryImage,
   saveProject,
   saveResearch,
   saveSettings,
+  saveSkill,
   saveSocialLink,
   uploadGalleryImage,
   uploadResume,
@@ -79,6 +89,8 @@ export default async function AdminPage() {
     galleries,
     resumes,
     socials,
+    skills,
+    certifications,
   ] = await Promise.all([
     getSiteSettings(),
     getProjects(),
@@ -88,12 +100,14 @@ export default async function AdminPage() {
     getGalleries(),
     getResumeFiles(),
     getSocialLinks(),
+    getSkills(),
+    getCertifications(),
   ]);
   const writable = isDatabaseConfigured();
   const blobReady = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
   return (
-    <section className="min-h-screen bg-zinc-950">
+    <section className="min-h-screen bg-[radial-gradient(circle_at_78%_0%,rgba(34,211,238,0.07),transparent_28rem),radial-gradient(circle_at_16%_28%,rgba(16,185,129,0.045),transparent_24rem),#070b0d]">
       <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8">
         <div className="flex flex-col gap-6 border-b border-white/8 pb-8 md:flex-row md:items-end md:justify-between">
           <div>
@@ -101,18 +115,23 @@ export default async function AdminPage() {
               <LockKeyhole className="size-4" />
               Protected workspace
             </div>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-white">
+            <h1 className="mt-4 bg-gradient-to-r from-white via-cyan-100 to-emerald-200 bg-clip-text text-4xl font-semibold tracking-[-0.045em] text-transparent">
               Portfolio control room
             </h1>
             <p className="mt-3 max-w-2xl text-zinc-500">
               Edit, publish, reorder, upload, and archive without touching code.
             </p>
           </div>
-          <Button asChild variant="secondary">
-            <Link href="/" target="_blank">
-              View site <ExternalLink className="size-4" />
-            </Link>
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button asChild variant="secondary">
+              <Link href="/" target="_blank">
+                View site <ExternalLink className="size-4" />
+              </Link>
+            </Button>
+            <div className="rounded-full border border-white/10 bg-white/[0.04] p-1">
+              <UserButton />
+            </div>
+          </div>
         </div>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -160,6 +179,7 @@ export default async function AdminPage() {
             ["Projects", "#projects"],
             ["Experience", "#experience"],
             ["Research", "#research"],
+            ["Skills", "#skills"],
             ["Blog", "#blog"],
             ["Galleries", "#galleries"],
             ["Résumé", "#resume"],
@@ -203,10 +223,78 @@ export default async function AdminPage() {
                     type="email"
                     value={settings.contactEmail}
                   />
+                  <div className="grid gap-4 sm:grid-cols-[120px_1fr] sm:items-end">
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-white/10 bg-zinc-950">
+                      <Image
+                        src={settings.portraitUrl}
+                        alt="Current site portrait"
+                        fill
+                        sizes="120px"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                    <div className="grid gap-4">
+                      <Field
+                        label="Current portrait URL"
+                        name="portraitUrl"
+                        value={settings.portraitUrl}
+                      />
+                      <Field
+                        label="Replace portrait"
+                        name="portraitFile"
+                        type="file"
+                        accept="image/*"
+                      />
+                    </div>
+                  </div>
                   <SaveButton />
                 </fieldset>
               </form>
             </Card>
+          </AdminSection>
+
+          <AdminSection
+            id="skills"
+            title="Skills & certifications"
+            count={skills.length + certifications.length}
+            description="Proficiency, learning sources, evidence, credential context, and display order."
+          >
+            <div className="grid gap-8 lg:grid-cols-2">
+              <div>
+                <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-white">
+                  <Gauge className="size-4 text-cyan-300" /> Skills
+                </div>
+                <EntityList
+                  writable={writable}
+                  entity="skill"
+                  newLabel="New skill"
+                  newForm={<SkillForm writable={writable} />}
+                >
+                  {skills.map((skill) => (
+                    <SkillForm key={skill.id} skill={skill} writable={writable} />
+                  ))}
+                </EntityList>
+              </div>
+              <div>
+                <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-white">
+                  <Award className="size-4 text-emerald-300" /> Certifications
+                </div>
+                <EntityList
+                  writable={writable}
+                  entity="certification"
+                  newLabel="New certification"
+                  newForm={<CertificationForm writable={writable} />}
+                >
+                  {certifications.map((certification) => (
+                    <CertificationForm
+                      key={certification.id}
+                      certification={certification}
+                      writable={writable}
+                    />
+                  ))}
+                </EntityList>
+              </div>
+            </div>
           </AdminSection>
 
           <AdminSection
@@ -319,9 +407,9 @@ export default async function AdminPage() {
                         {gallery.images.map((image) => (
                           <div
                             key={image.id}
-                            className="flex items-center gap-4 rounded-md border border-white/8 p-3"
+                            className="grid gap-4 rounded-xl border border-white/8 p-3 sm:grid-cols-[72px_1fr_auto] sm:items-center"
                           >
-                            <div className="relative size-16 shrink-0 overflow-hidden rounded bg-zinc-950">
+                            <div className="relative size-[72px] shrink-0 overflow-hidden rounded-lg bg-zinc-950">
                               <Image
                                 src={image.url}
                                 alt={image.alt}
@@ -330,22 +418,41 @@ export default async function AdminPage() {
                                 className="object-contain p-1"
                               />
                             </div>
-                            <div className="min-w-0 flex-1">
+                            <div className="min-w-0">
                               <p className="truncate text-sm text-zinc-300">
                                 {image.caption ?? image.alt}
                               </p>
+                              <p className="mt-1 truncate font-mono text-[9px] text-zinc-700">
+                                {image.url}
+                              </p>
                             </div>
-                            <OrderControls
-                              entity="galleryImage"
-                              id={image.id}
-                              galleryId={gallery.id}
-                              writable={writable}
-                            />
-                            <DeleteControl
-                              entity="galleryImage"
-                              id={image.id}
-                              writable={writable}
-                            />
+                            <div className="flex items-center gap-2">
+                              <OrderControls
+                                entity="galleryImage"
+                                id={image.id}
+                                galleryId={gallery.id}
+                                writable={writable}
+                              />
+                              <DeleteControl
+                                entity="galleryImage"
+                                id={image.id}
+                                writable={writable}
+                              />
+                            </div>
+                            <details className="sm:col-span-3 rounded-lg border border-white/[0.07] bg-black/15 p-3">
+                              <summary className="cursor-pointer text-xs font-semibold text-cyan-300">
+                                Edit caption or replace image
+                              </summary>
+                              <form action={saveGalleryImage} className="mt-4 grid gap-3 sm:grid-cols-2">
+                                <input type="hidden" name="id" value={image.id} />
+                                <Field label="Replacement image" name="file" type="file" accept="image/*" />
+                                <Field label="Alt text" name="alt" value={image.alt} />
+                                <Field label="Caption" name="caption" value={image.caption ?? ""} />
+                                <Button type="submit" variant="secondary" className="sm:w-fit">
+                                  <Save className="size-4" /> Save image
+                                </Button>
+                              </form>
+                            </details>
                           </div>
                         ))}
                       </div>
@@ -584,6 +691,17 @@ function ProjectForm({
               value={project?.externalUrl ?? ""}
             />
           </div>
+          <div className="rounded-xl border border-dashed border-cyan-300/20 bg-cyan-300/[0.025] p-4">
+            <Field
+              label="Upload / replace cover image"
+              name="coverFile"
+              type="file"
+              accept="image/*"
+            />
+            <p className="mt-2 text-xs leading-5 text-zinc-600">
+              Uploading a file replaces the URL above. Transparent CAD renders and high-resolution photos are supported.
+            </p>
+          </div>
           <label className="flex items-center gap-2 text-sm text-zinc-400">
             <input type="checkbox" name="featured" defaultChecked={project?.featured} />
             Feature on homepage
@@ -723,10 +841,135 @@ function BlogForm({
               value={post?.coverImageUrl ?? ""}
             />
           </div>
+          <div className="grid gap-4 rounded-xl border border-dashed border-cyan-300/20 bg-cyan-300/[0.025] p-4 sm:grid-cols-2">
+            <Field
+              label="Upload / replace cover image"
+              name="coverFile"
+              type="file"
+              accept="image/*"
+            />
+            <div className="grid gap-4">
+              <Field
+                label="Add photo or file to post"
+                name="attachmentFile"
+                type="file"
+              />
+              <Field
+                label="Attachment caption / link label"
+                name="attachmentLabel"
+                placeholder="Test results, gallery photo, CAD package..."
+              />
+            </div>
+            <p className="text-xs leading-5 text-zinc-600 sm:col-span-2">
+              Images are appended to the Markdown body as responsive media. Other files are appended as download links.
+            </p>
+          </div>
           <label className="flex items-center gap-2 text-sm text-zinc-400">
             <input type="checkbox" name="published" defaultChecked={post?.published} />
             Published
           </label>
+          <SaveButton />
+        </fieldset>
+      </form>
+    </EditorShell>
+  );
+}
+
+function SkillForm({
+  skill,
+  writable,
+}: {
+  skill?: Skill;
+  writable: boolean;
+}) {
+  return (
+    <EditorShell
+      title={skill?.name ?? "Untitled skill"}
+      entity="skill"
+      id={skill?.id}
+      writable={writable}
+      sortOrder={skill?.sortOrder}
+      status={skill ? `${skill.proficiency}%` : undefined}
+    >
+      <form action={saveSkill}>
+        <fieldset disabled={!writable} className="grid gap-4 disabled:opacity-60">
+          <input type="hidden" name="id" value={skill?.id ?? ""} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Skill" name="name" value={skill?.name} />
+            <Field label="Category" name="category" value={skill?.category} />
+            <Field
+              label="Proficiency (0-100)"
+              name="proficiency"
+              type="number"
+              value={skill?.proficiency ?? 50}
+            />
+            <Field
+              label="Sort order"
+              name="sortOrder"
+              type="number"
+              value={skill?.sortOrder ?? 0}
+            />
+          </div>
+          <TextArea label="What it means" name="description" value={skill?.description} />
+          <TextArea label="Where it was learned" name="learnedFrom" value={skill?.learnedFrom} />
+          <TextArea
+            label="Evidence (one per line)"
+            name="evidence"
+            value={skill?.evidence.join("\n")}
+          />
+          <SaveButton />
+        </fieldset>
+      </form>
+    </EditorShell>
+  );
+}
+
+function CertificationForm({
+  certification,
+  writable,
+}: {
+  certification?: Certification;
+  writable: boolean;
+}) {
+  return (
+    <EditorShell
+      title={certification?.name ?? "Untitled certification"}
+      entity="certification"
+      id={certification?.id}
+      writable={writable}
+      sortOrder={certification?.sortOrder}
+      status={certification?.issuer}
+    >
+      <form action={saveCertification}>
+        <fieldset disabled={!writable} className="grid gap-4 disabled:opacity-60">
+          <input type="hidden" name="id" value={certification?.id ?? ""} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Certification" name="name" value={certification?.name} />
+            <Field label="Issuer" name="issuer" value={certification?.issuer} />
+            <Field label="Issued / status" name="issued" value={certification?.issued} />
+            <Field
+              label="Sort order"
+              name="sortOrder"
+              type="number"
+              value={certification?.sortOrder ?? 0}
+            />
+          </div>
+          <TextArea
+            label="What it validates"
+            name="description"
+            value={certification?.description}
+          />
+          <Field
+            label="Skills"
+            name="skills"
+            value={certification?.skills.join(", ")}
+          />
+          <Field
+            label="Credential URL"
+            name="credentialUrl"
+            type="url"
+            value={certification?.credentialUrl ?? ""}
+          />
           <SaveButton />
         </fieldset>
       </form>

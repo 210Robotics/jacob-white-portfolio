@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { getSiteSettings } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "About",
@@ -89,7 +90,8 @@ const principles = [
   ],
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSiteSettings();
   return (
     <>
       <section className="engineering-grid border-b border-white/8">
@@ -101,20 +103,21 @@ export default function AboutPage() {
               title="An engineer who is happiest at the interfaces."
               description="Mechanical and software. CAD and the shop floor. Simulation and test. Technical detail and team leadership. Jacob's work lives where those disciplines have to agree."
             />
-            <figure className="relative mx-auto w-full max-w-[260px] overflow-hidden rounded-2xl border border-teal-300/20 bg-[#0d1315] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.32)] lg:mx-0">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
+            <figure className="relative mx-auto w-full max-w-[300px] overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#0d1315] p-2 shadow-[0_32px_90px_rgba(0,0,0,0.42)] lg:mx-0">
+              <div className="absolute -right-16 -top-20 size-48 rounded-full bg-cyan-400/10 blur-3xl" />
+              <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-gradient-to-br from-cyan-400/10 to-emerald-300/[0.04]">
                 <Image
-                  src="/portrait/jacob-white.jpg"
+                  src={settings.portraitUrl}
                   alt="Headshot of Jacob White"
                   fill
-                  sizes="260px"
-                  className="object-cover object-top"
+                  sizes="300px"
+                  className="object-cover object-[center_28%] transition duration-700 hover:scale-[1.015]"
                   priority
                 />
               </div>
               <figcaption className="flex items-center justify-between gap-3 px-2 pb-1 pt-3">
                 <span className="text-sm font-medium text-white">Jacob White</span>
-                <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-teal-400">
+                <span className="bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-[9px] font-semibold uppercase tracking-[0.16em] text-transparent">
                   Engineer
                 </span>
               </figcaption>
@@ -216,6 +219,9 @@ export default function AboutPage() {
           </Button>
           <Button asChild variant="secondary">
             <Link href="/resume">Download résumé</Link>
+          </Button>
+          <Button asChild variant="secondary">
+            <Link href="/skills">Skills & certifications</Link>
           </Button>
         </div>
       </section>

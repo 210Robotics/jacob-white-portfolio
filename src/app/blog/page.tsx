@@ -24,16 +24,18 @@ export default async function BlogPage() {
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
         <SectionHeading
           as="h1"
-          eyebrow="Field notes"
-          title="What the build taught me."
-          description="Short essays on engineering decisions, project leadership, manufacturing reality, and the systems behind the finished machine."
+          eyebrow="Blog"
+          title="The work between the milestones."
+          description="Current projects, engineering decisions, test notes, leadership lessons, and the systems behind the finished machine."
         />
         {posts.length ? (
           <div className="mt-14 grid gap-5 md:grid-cols-2">
-            {posts.map((post) => (
+            {posts.map((post, index) => (
               <Card
                 key={post.id}
-                className="group relative overflow-hidden transition-[transform,border-color] hover:-translate-y-1 hover:border-teal-400/30"
+                className={`group relative overflow-hidden transition-[transform,border-color] hover:-translate-y-1 hover:border-cyan-300/30 ${
+                  index === 0 ? "md:col-span-2 md:grid md:grid-cols-[1.1fr_0.9fr]" : ""
+                }`}
               >
                 <Link
                   href={`/blog/${post.slug}`}
@@ -42,17 +44,25 @@ export default async function BlogPage() {
                   <span className="sr-only">Read {post.title}</span>
                 </Link>
                 {post.coverImageUrl ? (
-                  <div className="relative aspect-[16/8] overflow-hidden border-b border-white/8 bg-[#0c1113]">
+                  <div className={`relative overflow-hidden bg-[#0c1113] ${
+                    index === 0
+                      ? "aspect-[16/10] border-b border-white/8 md:aspect-auto md:min-h-[390px] md:border-b-0 md:border-r"
+                      : "aspect-[16/9] border-b border-white/8"
+                  }`}>
                     <Image
                       src={post.coverImageUrl}
                       alt=""
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-contain p-3 transition duration-500 group-hover:scale-[1.012]"
+                      className={
+                        post.coverImageUrl.includes("portrait")
+                          ? "object-cover object-[center_28%] transition duration-700 group-hover:scale-[1.025]"
+                          : "object-contain p-5 drop-shadow-[0_20px_30px_rgba(0,0,0,0.38)] transition duration-700 group-hover:scale-[1.025]"
+                      }
                     />
                   </div>
                 ) : null}
-                <div className="p-6 sm:p-7">
+                <div className={`p-6 sm:p-7 ${index === 0 ? "md:flex md:flex-col md:justify-center md:p-10" : ""}`}>
                   <div className="flex items-center justify-between gap-4">
                     <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-600">
                       {formatDate(post.publishedAt)}

@@ -19,6 +19,7 @@ export const siteSettings = pgTable("site_settings", {
   heroSummary: text("hero_summary").notNull(),
   availability: text("availability").notNull(),
   contactEmail: text("contact_email").notNull(),
+  portraitUrl: text("portrait_url").notNull(),
   ...timestamps,
 });
 
@@ -116,6 +117,30 @@ export const socialLinks = pgTable("social_links", {
   label: text("label").notNull(),
   url: text("url").notNull(),
   kind: text("kind").notNull(),
+  sortOrder: integer("sort_order").default(0).notNull(),
+  ...timestamps,
+});
+
+export const skills = pgTable("skills", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  category: text("category").notNull(),
+  proficiency: integer("proficiency").default(50).notNull(),
+  description: text("description").notNull(),
+  learnedFrom: text("learned_from").notNull(),
+  evidence: jsonb("evidence").$type<string[]>().default([]).notNull(),
+  sortOrder: integer("sort_order").default(0).notNull(),
+  ...timestamps,
+});
+
+export const certifications = pgTable("certifications", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  issuer: text("issuer").notNull(),
+  issued: text("issued").notNull(),
+  description: text("description").notNull(),
+  skills: jsonb("skills").$type<string[]>().default([]).notNull(),
+  credentialUrl: text("credential_url"),
   sortOrder: integer("sort_order").default(0).notNull(),
   ...timestamps,
 });

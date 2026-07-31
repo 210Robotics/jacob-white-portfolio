@@ -6,12 +6,14 @@ import { revalidatePath } from "next/cache";
 import { getDb, isDatabaseConfigured } from "@/db";
 import {
   blogPosts,
+  certifications,
   experiences,
   galleries,
   galleryImages,
   projects,
   researchItems,
   resumeFiles,
+  skills,
   siteSettings,
   socialLinks,
 } from "@/db/schema";
@@ -46,8 +48,43 @@ function refresh(...paths: string[]) {
   }
 }
 
+async function uploadOptionalFile({
+  formData,
+  key,
+  folder,
+  accept,
+  maxSizeMb = 10,
+}: {
+  formData: FormData;
+  key: string;
+  folder: string;
+  accept: (file: File) => boolean;
+  maxSizeMb?: number;
+}) {
+  const file = formData.get(key);
+  if (!(file instanceof File) || file.size === 0) return null;
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    throw new Error("BLOB_READ_WRITE_TOKEN is required for uploads.");
+  }
+  if (!accept(file)) throw new Error(`The selected ${key} file type is not supported.`);
+  if (file.size > maxSizeMb * 1024 * 1024) {
+    throw new Error(`${key} must be ${maxSizeMb} MB or smaller.`);
+  }
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+  return put(`portfolio/${folder}/${Date.now()}-${safeName}`, file, {
+    access: "public",
+    addRandomSuffix: true,
+  });
+}
+
 export async function saveSettings(formData: FormData) {
   await requireWritableAdmin();
+  const portrait = await uploadOptionalFile({
+    formData,
+    key: "portraitFile",
+    folder: "portrait",
+    accept: (file) => file.type.startsWith("image/"),
+  });
   const values = {
     id: "primary",
     heroEyebrow: text(formData, "heroEyebrow"),
@@ -55,6 +92,7 @@ export async function saveSettings(formData: FormData) {
     heroSummary: text(formData, "heroSummary"),
     availability: text(formData, "availability"),
     contactEmail: text(formData, "contactEmail"),
+    portraitUrl: portrait?.url || text(formData, "portraitUrl"),
     updatedAt: new Date(),
   };
   await getDb()
@@ -66,6 +104,12 @@ export async function saveSettings(formData: FormData) {
 
 export async function saveProject(formData: FormData) {
   await requireWritableAdmin();
+  const cover = await uploadOptionalFile({
+    formData,
+    key: "coverFile",
+    folder: "projects",
+    accept: (file) => file.type.startsWith("image/"),
+  });
   const id = idFrom(formData);
   const rawSlug = text(formData, "slug") || slugify(text(formData, "title"));
   const parsed = projectSchema.parse({
@@ -81,7 +125,7 @@ export async function saveProject(formData: FormData) {
   const values = {
     ...parsed,
     technologies: splitList(formData.get("technologies")),
-    coverImageUrl: text(formData, "coverImageUrl") || null,
+    coverImageUrl: cover?.url || text(formData, "coverImageUrl") || null,
     sourceUrl: text(formData, "sourceUrl") || null,
     externalUrl: text(formData, "externalUrl") || null,
     featured: formData.get("featured") === "on",
@@ -145,20 +189,41 @@ export async function saveResearch(formData: FormData) {
 
 export async function saveBlogPost(formData: FormData) {
   await requireWritableAdmin();
+  const cover = await uploadOptionalFile({
+    formData,
+    key: "coverFile",
+    folder: "blog/covers",
+    accept: (file) => file.type.startsWith("image/"),
+  });
+  const attachment = await uploadOptionalFile({
+    formData,
+    key: "attachmentFile",
+    folder: "blog/attachments",
+    accept: () => true,
+    maxSizeMb: 10,
+  });
   const id = idFrom(formData);
+  const originalBody = text(formData, "body");
+  const attachmentInput = formData.get("attachmentFile");
+  const attachmentMarkup =
+    attachment && attachmentInput instanceof File
+      ? attachmentInput.type.startsWith("image/")
+        ? `\n\n![${text(formData, "attachmentLabel") || attachmentInput.name}](${attachment.url})`
+        : `\n\n[${text(formData, "attachmentLabel") || attachmentInput.name}](${attachment.url})`
+      : "";
   const parsed = blogSchema.parse({
     id,
     slug: text(formData, "slug") || slugify(text(formData, "title")),
     title: text(formData, "title"),
     excerpt: text(formData, "excerpt"),
-    body: text(formData, "body"),
+    body: `${originalBody}${attachmentMarkup}`,
   });
   const published = formData.get("published") === "on";
   const publishedAtValue = text(formData, "publishedAt");
   const values = {
     ...parsed,
     tags: splitList(formData.get("tags")),
-    coverImageUrl: text(formData, "coverImageUrl") || null,
+    coverImageUrl: cover?.url || text(formData, "coverImageUrl") || null,
     published,
     publishedAt: published
       ? publishedAtValue
@@ -173,6 +238,58 @@ export async function saveBlogPost(formData: FormData) {
     .values(values)
     .onConflictDoUpdate({ target: blogPosts.id, set: values });
   refresh("/blog", `/blog/${values.slug}`);
+}
+
+export async function saveSkill(formData: FormData) {
+  await requireWritableAdmin();
+  const id = idFrom(formData);
+  const values = {
+    id,
+    name: text(formData, "name"),
+    category: text(formData, "category"),
+    proficiency: Math.max(0, Math.min(100, numberFrom(formData, "proficiency", 50))),
+    description: text(formData, "description"),
+    learnedFrom: text(formData, "learnedFrom"),
+    evidence: splitList(formData.get("evidence")),
+    sortOrder: numberFrom(formData, "sortOrder"),
+    updatedAt: new Date(),
+  };
+  if (!values.name || !values.category || !values.description || !values.learnedFrom) {
+    throw new Error("Skill name, category, description, and learning source are required.");
+  }
+  await getDb()
+    .insert(skills)
+    .values(values)
+    .onConflictDoUpdate({ target: skills.id, set: values });
+  refresh("/skills");
+}
+
+export async function saveCertification(formData: FormData) {
+  await requireWritableAdmin();
+  const id = idFrom(formData);
+  const credentialUrl = text(formData, "credentialUrl");
+  const values = {
+    id,
+    name: text(formData, "name"),
+    issuer: text(formData, "issuer"),
+    issued: text(formData, "issued"),
+    description: text(formData, "description"),
+    skills: splitList(formData.get("skills")),
+    credentialUrl: credentialUrl || null,
+    sortOrder: numberFrom(formData, "sortOrder"),
+    updatedAt: new Date(),
+  };
+  if (!values.name || !values.issuer || !values.description) {
+    throw new Error("Certification name, issuer, and description are required.");
+  }
+  if (credentialUrl && !URL.canParse(credentialUrl)) {
+    throw new Error("Credential URL must be valid.");
+  }
+  await getDb()
+    .insert(certifications)
+    .values(values)
+    .onConflictDoUpdate({ target: certifications.id, set: values });
+  refresh("/skills");
 }
 
 export async function saveGallery(formData: FormData) {
@@ -249,6 +366,37 @@ export async function uploadGalleryImage(formData: FormData) {
   refresh("/gallery");
 }
 
+export async function saveGalleryImage(formData: FormData) {
+  await requireWritableAdmin();
+  const id = text(formData, "id");
+  const db = getDb();
+  const [current] = await db
+    .select()
+    .from(galleryImages)
+    .where(eq(galleryImages.id, id))
+    .limit(1);
+  if (!current) throw new Error("Gallery image not found.");
+  const replacement = await uploadOptionalFile({
+    formData,
+    key: "file",
+    folder: `galleries/${current.galleryId}`,
+    accept: (file) => file.type.startsWith("image/"),
+  });
+  await db
+    .update(galleryImages)
+    .set({
+      url: replacement?.url || current.url,
+      alt: text(formData, "alt") || current.alt,
+      caption: text(formData, "caption") || null,
+      updatedAt: new Date(),
+    })
+    .where(eq(galleryImages.id, id));
+  if (replacement && current.url.includes("blob.vercel-storage.com")) {
+    await del(current.url);
+  }
+  refresh("/gallery");
+}
+
 export async function uploadResume(formData: FormData) {
   await requireWritableAdmin();
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
@@ -320,6 +468,14 @@ export async function deleteEntity(formData: FormData) {
       await db.delete(socialLinks).where(eq(socialLinks.id, id));
       refresh("/contact");
       break;
+    case "skill":
+      await db.delete(skills).where(eq(skills.id, id));
+      refresh("/skills");
+      break;
+    case "certification":
+      await db.delete(certifications).where(eq(certifications.id, id));
+      refresh("/skills");
+      break;
     case "resume": {
       const [file] = await db
         .select()
@@ -373,6 +529,8 @@ export async function moveEntity(formData: FormData) {
     blog: { table: blogPosts, path: "/blog" },
     gallery: { table: galleries, path: "/gallery" },
     social: { table: socialLinks, path: "/contact" },
+    skill: { table: skills, path: "/skills" },
+    certification: { table: certifications, path: "/skills" },
   } as const;
 
   const config = tableConfig[entity as keyof typeof tableConfig];

@@ -28,9 +28,10 @@ export async function SiteFooter() {
               ["Projects", "/projects"],
               ["Research", "/research"],
               ["Experience", "/experience"],
+              ["Skills", "/skills"],
               ["Gallery", "/gallery"],
               ["Blog", "/blog"],
-              ["Admin", "/admin"],
+              ["Résumé", "/resume"],
             ].map(([label, href]) => (
               <Link key={href} href={href} className="text-zinc-400 hover:text-white">
                 {label}

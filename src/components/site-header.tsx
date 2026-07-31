@@ -8,7 +8,8 @@ const links = [
   ["About", "/about"],
   ["Experience", "/experience"],
   ["Research", "/research"],
-  ["Notes", "/blog"],
+  ["Skills", "/skills"],
+  ["Blog", "/blog"],
   ["Gallery", "/gallery"],
 ];
 
@@ -41,7 +42,7 @@ export function SiteHeader() {
           </SiteNavLink>
           <Link
             href="/contact"
-            className="rounded-lg bg-teal-400 px-3.5 py-2 text-[13px] font-semibold text-[#06100f] transition-[background,transform] hover:-translate-y-0.5 hover:bg-teal-300"
+            className="rounded-lg bg-gradient-to-r from-cyan-400 to-emerald-300 px-3.5 py-2 text-[13px] font-semibold text-[#04110f] shadow-[0_8px_28px_rgba(34,211,238,0.14)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-110"
           >
             Contact
           </Link>

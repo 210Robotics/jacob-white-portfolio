@@ -4,14 +4,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold tracking-tight transition-[background,color,border-color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold tracking-tight transition-[background,color,border-color,transform,filter] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary:
-          "bg-teal-400 text-[#06100f] hover:-translate-y-0.5 hover:bg-teal-300",
+          "bg-gradient-to-r from-cyan-400 to-emerald-300 text-[#04110f] shadow-[0_10px_30px_rgba(34,211,238,0.12)] hover:-translate-y-0.5 hover:brightness-110",
         secondary:
-          "border border-white/[0.13] bg-white/[0.025] text-white hover:-translate-y-0.5 hover:border-teal-300/30 hover:bg-white/[0.055]",
+          "border border-white/[0.13] bg-white/[0.025] text-white hover:-translate-y-0.5 hover:border-cyan-300/30 hover:bg-white/[0.055]",
         ghost: "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
         danger:
           "border border-red-400/30 bg-red-500/10 text-red-200 hover:bg-red-500/20",

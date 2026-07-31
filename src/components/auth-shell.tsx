@@ -17,8 +17,9 @@ export function AuthShell({
       signInUrl="/sign-in"
       appearance={{
         variables: {
-          colorPrimary: "#f97316",
-          colorBackground: "#111113",
+          colorPrimary: "#22d3ee",
+          colorBackground: "#0a1013",
+          borderRadius: "0.75rem",
         },
       }}
     >

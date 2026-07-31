@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { GalleryCarousel } from "@/components/gallery-carousel";
-import { SectionHeading } from "@/components/section-heading";
 import { getGalleries } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -17,17 +16,23 @@ export default async function GalleryPage() {
   return (
     <section className="engineering-grid min-h-screen">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
-        <SectionHeading
-          as="h1"
-          eyebrow="Gallery"
-          title="The work is better up close."
-          description="Horizontal, touch-friendly galleries for CAD, prototypes, competition moments, shop work, and the people behind the machine."
-        />
-        <div className="mt-16 grid gap-20">
+        <div className="grid gap-8 border-b border-white/[0.08] pb-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <h1 className="text-balance text-4xl font-medium tracking-[-0.055em] text-white sm:text-6xl">
+            Engineering is
+            <span className="block bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-transparent">
+              worth seeing up close.
+            </span>
+          </h1>
+          <p className="max-w-2xl text-lg leading-8 text-zinc-400 lg:justify-self-end">
+            CAD, mechanisms, competition robots, prototypes, events, and the
+            people behind them. Select any image for a clean full-screen view.
+          </p>
+        </div>
+        <div className="mt-16 grid gap-24">
           {galleries.map((gallery, index) => (
             <section key={gallery.id} aria-labelledby={`gallery-${gallery.id}`}>
-              <div className="mb-7 flex items-start gap-5">
-                <span className="mt-1 font-mono text-xs text-zinc-700">
+              <div className="mb-8 flex items-start gap-5">
+                <span className="mt-1 font-mono text-xs text-cyan-300/60">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>

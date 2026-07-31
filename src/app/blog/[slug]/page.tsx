@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 lg:py-24">
           <Button asChild variant="ghost" size="sm" className="-ml-3">
             <Link href="/blog">
-              <ArrowLeft className="size-4" /> Field notes
+              <ArrowLeft className="size-4" /> All blog posts
             </Link>
           </Button>
           <p className="mt-10 font-mono text-xs uppercase tracking-[0.16em] text-zinc-600">

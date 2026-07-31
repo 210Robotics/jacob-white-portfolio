@@ -5,32 +5,38 @@ import { cache } from "react";
 import { getDb, isDatabaseConfigured } from "@/db";
 import {
   blogPosts,
+  certifications,
   experiences,
   galleries,
   galleryImages,
   projects,
   researchItems,
   resumeFiles,
+  skills,
   siteSettings,
   socialLinks,
 } from "@/db/schema";
 import {
   blogPostsSeed,
+  certificationsSeed,
   experiencesSeed,
   galleriesSeed,
   projectsSeed,
   researchSeed,
   resumeFilesSeed,
+  skillsSeed,
   siteSettingsSeed,
   socialLinksSeed,
 } from "./seed-content";
 import type {
   BlogPost,
+  Certification,
   Experience,
   Gallery,
   Project,
   ResearchItem,
   ResumeFile,
+  Skill,
   SiteSettings,
   SocialLink,
 } from "./types";
@@ -168,5 +174,23 @@ export const getSocialLinks = cache(async (): Promise<SocialLink[]> => {
     async () =>
       getDb().select().from(socialLinks).orderBy(asc(socialLinks.sortOrder)),
     socialLinksSeed,
+  );
+});
+
+export const getSkills = cache(async (): Promise<Skill[]> => {
+  return withFallback(
+    async () => getDb().select().from(skills).orderBy(asc(skills.sortOrder)),
+    skillsSeed,
+  );
+});
+
+export const getCertifications = cache(async (): Promise<Certification[]> => {
+  return withFallback(
+    async () =>
+      getDb()
+        .select()
+        .from(certifications)
+        .orderBy(asc(certifications.sortOrder)),
+    certificationsSeed,
   );
 });

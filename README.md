@@ -4,10 +4,12 @@ A production-ready personal portfolio and lightweight CMS for Jacob White: mecha
 
 The public site includes:
 
-- Home, about, experience, research, gallery, résumé, and contact pages
+- Home, about, experience, research, skills, certifications, gallery, résumé, and contact pages
 - Filterable project portfolio with dedicated project pages
-- Markdown blog with tags, drafts, cover images, and individual post pages
-- Named, reorderable image galleries with horizontal carousels and lightbox viewing
+- Interactive homepage project stack with click, arrow, and position controls
+- Expandable research briefs with editable long-form Markdown content
+- Markdown blog with tags, drafts, cover images, file attachments, and individual post pages
+- Named, reorderable image galleries with editorial grids and full-screen lightbox viewing
 - Résumé preview/download with version metadata and an optional archive
 - Responsive navigation, accessible controls, SEO metadata, Open Graph imagery, sitemap, and robots rules
 - A Jacob-only dashboard for updating site content without editing code
@@ -19,7 +21,7 @@ The public site includes:
 - Clerk authentication
 - Vercel Blob for images and résumé files
 - Zod validation
-- Vitest, ESLint, and TypeScript validation
+- Playwright, Vitest, ESLint, and TypeScript validation
 
 ## Local setup
 
@@ -85,6 +87,8 @@ The dashboard supports creating, editing, deleting, publishing, featuring, and r
 - Research items
 - Blog posts and drafts
 - Galleries and uploaded gallery images
+- Skills, proficiency, learning sources, and supporting evidence
+- Certifications, issuers, completion state, and credential links
 - Current and archived résumé files
 
 Uploads are sent directly to Vercel Blob by authenticated server actions. Public pages revalidate after changes.
@@ -115,6 +119,7 @@ Or run checks individually:
 npm run lint
 npm run typecheck
 npm run test
+npm run test:e2e
 npm run build
 ```
 

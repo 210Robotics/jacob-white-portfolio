@@ -88,6 +88,28 @@ export type SocialLink = {
   sortOrder: number;
 };
 
+export type Skill = {
+  id: string;
+  name: string;
+  category: string;
+  proficiency: number;
+  description: string;
+  learnedFrom: string;
+  evidence: string[];
+  sortOrder: number;
+};
+
+export type Certification = {
+  id: string;
+  name: string;
+  issuer: string;
+  issued: string;
+  description: string;
+  skills: string[];
+  credentialUrl?: string | null;
+  sortOrder: number;
+};
+
 export type SiteSettings = {
   id: string;
   heroEyebrow: string;
@@ -95,4 +117,5 @@ export type SiteSettings = {
   heroSummary: string;
   availability: string;
   contactEmail: string;
+  portraitUrl: string;
 };
